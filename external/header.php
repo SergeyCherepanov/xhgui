@@ -90,6 +90,8 @@ if (extension_loaded('uprofiler')) {
     uprofiler_enable(UPROFILER_FLAGS_CPU | UPROFILER_FLAGS_MEMORY);
 } else if (extension_loaded('tideways')) {
     tideways_enable(TIDEWAYS_FLAGS_CPU | TIDEWAYS_FLAGS_MEMORY | TIDEWAYS_FLAGS_NO_SPANS);
+} else if (extension_loaded('tideways_xhprof')) {
+    tideways_xhprof_enable(TIDEWAYS_XHPROF_FLAGS_CPU | TIDEWAYS_XHPROF_FLAGS_MEMORY | TIDEWAYS_XHPROF_FLAGS_NO_SPANS);
 } else {
     if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION > 4) {
         xhprof_enable(XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY | XHPROF_FLAGS_NO_BUILTINS);
@@ -104,6 +106,8 @@ register_shutdown_function(
             $data['profile'] = uprofiler_disable();
         } else if (extension_loaded('tideways')) {
             $data['profile'] = tideways_disable();
+        } else if (extension_loaded('tideways')) {
+            $data['profile'] = tideways_xhprof_disable();
         } else {
             $data['profile'] = xhprof_disable();
         }
